@@ -10,3 +10,6 @@ __pycache__/
 
 # Mac system files
 .DS_Store
+
+# Dataset (too big for GitHub)
+data/
