@@ -29,7 +29,12 @@ def check_url(url):
     # Layer 2: the ML model
     features = pd.DataFrame([extract_features(url)])
     safe_chance = model.predict_proba(features)[0, 1]
-    verdict = "SAFE" if safe_chance >= 0.5 else "PHISHING"
+    if safe_chance < 0.5:
+        verdict = "PHISHING"
+    elif safe_chance < 0.7:
+        verdict = "SUSPICIOUS"
+    else:
+        verdict = "SAFE"
     return verdict, safe_chance, "model"
 
 
@@ -44,7 +49,10 @@ if __name__ == "__main__":
         "https://secure-login-apple.com.verify-id.info/account",
         "http://192.168.0.1/bank/update",
         "https://google.com.account-check.info/login",
+        "https://www.cbc.ca/news",
+        "https://news.ycombinator.com",
+        "https://www.reddit.com/r/learnpython",
     ]
     for url in test_urls:
         verdict, chance, reason = check_url(url)
-        print(f"{verdict:9} ({chance:.0%} safe, {reason})  {url}")
+        print(f"{verdict:10} ({chance:.0%} safe, {reason})  {url}")
