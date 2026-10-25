@@ -42,5 +42,5 @@ import joblib
 import os
 
 os.makedirs("models", exist_ok=True)
-joblib.dump(model, "models/phishing_model.joblib")
+joblib.dump(model, "models/phishing_model.joblib", compress=3)
 print("\nModel saved to models/phishing_model.joblib")
