@@ -36,3 +36,11 @@ print(classification_report(y_test, predictions, target_names=["phishing", "safe
 importances = pd.Series(model.feature_importances_, index=X.columns)
 print("\nFeature importance:")
 print(importances.sort_values(ascending=False).round(3))
+
+# Save the trained model to a file
+import joblib
+import os
+
+os.makedirs("models", exist_ok=True)
+joblib.dump(model, "models/phishing_model.joblib")
+print("\nModel saved to models/phishing_model.joblib")

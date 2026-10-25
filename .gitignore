@@ -13,3 +13,6 @@ __pycache__/
 
 # Dataset (too big for GitHub)
 data/
+
+# Trained models (can be recreated by running train_model.py)
+models/
