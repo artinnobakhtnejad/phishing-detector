@@ -2,7 +2,7 @@
 
 A machine learning web app that checks whether a URL looks safe or like a phishing attempt, and explains why.
 
-**🔗 Live demo:** *coming soon*
+**🔗 Live demo:** [phishing-detector-qkqe.onrender.com](https://phishing-detector-qkqe.onrender.com) *(free hosting: the first visit may take up to a minute to wake up)*
 
 ## What it does
 
@@ -75,7 +75,9 @@ Catching more phishing always costs more false alarms. Instead of blocking every
 
 ## Tech stack
 
-Python · pandas · scikit-learn · Streamlit · joblib
+Python · pandas · scikit-learn · FastAPI · HTML/CSS/JavaScript · joblib · deployed on Render
+
+**Architecture:** a FastAPI backend exposes `POST /api/check`, which runs the allowlist and the model and returns JSON. A custom HTML/CSS/JavaScript frontend calls it with `fetch`. Warning signs are inserted with `textContent` to prevent XSS.
 
 ## Run it locally
 
@@ -85,8 +87,9 @@ cd phishing-detector
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-streamlit run app.py
+uvicorn api:app --reload
 ```
+Then open http://127.0.0.1:8000.
 
 To retrain the model, download the dataset from UCI into `data/`, then run `build_features.py` and `train_model.py`.
 
@@ -99,7 +102,9 @@ To retrain the model, download the dataset from UCI into `data/`, then run `buil
 | `train_model.py` | Trains, evaluates and saves the model |
 | `tune_threshold.py` | Compares decision thresholds |
 | `predict.py` | Allowlist + model checker (`check_url`) |
-| `app.py` | Streamlit web app |
+| `api.py` | FastAPI backend (`POST /api/check`) and page server |
+| `static/index.html` | Website frontend (HTML, CSS, JavaScript) |
+| `app.py` | Earlier Streamlit version of the app |
 | `explore_data.py`, `test_urls.py` | Data exploration and real-world tests |
 
 ## Dataset
