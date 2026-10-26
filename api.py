@@ -1,9 +1,13 @@
+from fastapi.responses import FileResponse
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from features import get_domain
 from predict import check_url, warning_signs
 
 app = FastAPI(title="Phishing URL Detector API")
+@app.get("/")
+def home():
+    return FileResponse("static/index.html")
 
 
 class URLRequest(BaseModel):
